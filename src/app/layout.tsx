@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Mulish } from "next/font/google";
 import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 
-const inter = Inter({
+const mulish = Mulish({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`font-sans ${mulish.variable}`}>
         <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
       </body>
     </html>
