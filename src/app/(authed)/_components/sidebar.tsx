@@ -1,6 +1,7 @@
 "use client";
 
-import { useMediaQuery, useOnClickOutside } from "usehooks-ts";
+import { useOnClickOutside } from "usehooks-ts";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import SidebarLink from "./sidebar-link";
 
 import { CalendarCheck2, LayoutDashboard, Users } from "lucide-react";
@@ -11,7 +12,7 @@ import SidebarToggle from "./sidebar-toggle";
 import { useRef } from "react";
 
 export default function Sidebar() {
-  const lg = useMediaQuery("(min-width: 1024px)");
+  const lg = useMediaQuery("only screen and (min-width: 1024px)");
 
   const ref = useRef(null);
 
