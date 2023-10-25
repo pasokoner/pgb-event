@@ -5,6 +5,8 @@ import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 
+import { Toaster } from "react-hot-toast";
+
 const mulish = Mulish({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -24,7 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${mulish.variable}`}>
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headers()}>
+          {children}
+
+          <Toaster />
+        </TRPCReactProvider>
       </body>
     </html>
   );
