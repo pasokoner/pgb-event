@@ -13,11 +13,12 @@ datasource db {
 }
 
 model User {
-    id           String    @id @unique
-    username     String    @unique
-    password     String?
-    auth_session Session[]
-    key          Key[]
+    id              String            @id @unique
+    username        String            @unique
+    password        String?
+    auth_session    Session[]
+    key             Key[]
+    scannedEmployee EventAttendance[]
 }
 
 model Session {
@@ -45,15 +46,51 @@ enum EmploymentStatus {
 }
 
 model Employee {
-    id               String           @id @default(cuid())
-    firstName        String           @map("first_name")
-    lastName         String           @map("last_name")
-    middleName       String?          @map("middle_name")
-    extensionName    String?          @map("extension_name")
+    id               String            @id @default(cuid())
+    firstName        String            @map("first_name")
+    lastName         String            @map("last_name")
+    middleName       String?           @map("middle_name")
+    extensionName    String?           @map("extension_name")
     position         String
     office           String
-    officeAssignment String           @map("office_assignment")
+    officeAssignment String            @map("office_assignment")
     employmentStatus EmploymentStatus
+    eventAttendance  EventAttendance[]
 
     @@map("employees")
+}
+
+enum EventStatus {
+    UPCOMING
+    ONGOING
+    CANCELLED
+    ENDED
+}
+
+model Event {
+    id             String            @id @default(cuid())
+    name           String
+    date           DateTime
+    type           String
+    status         EventStatus       @default(UPCOMING)
+    eventAttendees EventAttendance[]
+    updatedAt      DateTime          @updatedAt @map("updated_at")
+    createdAt      DateTime          @default(now()) @map("created_at")
+}
+
+model EventAttendance {
+    event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+    eventId    String
+    employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+    employeeId String
+    user       User     @relation(fields: [userId], references: [id])
+    userId     String
+    date       DateTime @default(now())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@id([eventId, employeeId])
+    @@index([eventId])
+    @@index([employeeId])
+    @@index([userId])
 }
