@@ -1,15 +1,47 @@
 "use client";
 
+import { useMediaQuery, useOnClickOutside } from "usehooks-ts";
 import SidebarLink from "./sidebar-link";
 
 import { CalendarCheck2, LayoutDashboard, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { sidebarState } from "../_utils/sidebar";
+import { useRecoilState } from "recoil";
+import SidebarToggle from "./sidebar-toggle";
+import { useRef } from "react";
 
 export default function Sidebar() {
+  const lg = useMediaQuery("(min-width: 1024px)");
+
+  const ref = useRef(null);
+
+  const [sidebar, setSidebar] = useRecoilState(sidebarState);
+
+  const handleClickOutside = () => {
+    setSidebar((prev) => ({ ...prev, isOpen: false }));
+  };
+
+  useOnClickOutside(ref, handleClickOutside);
+
   return (
     <aside
-      className="fixed left-0 top-0 z-40 h-screen w-60 -translate-x-full border-[1px] bg-white transition-transform lg:translate-x-0"
+      ref={ref}
+      className={cn(
+        "fixed left-0 top-0 z-40 h-screen w-60 border-[1px] bg-white transition-transform",
+        lg
+          ? "translate-x-0"
+          : sidebar.isOpen
+          ? "translate-x-0"
+          : "-translate-x-full",
+      )}
       aria-label="Sidebar"
     >
+      {!lg && (
+        <div className="pl-4 pt-4">
+          <SidebarToggle />
+        </div>
+      )}
+
       <div className="mb-4 flex items-center justify-center py-6">
         <h1 className="text-center text-2xl font-bold">PGB EVENT</h1>
       </div>

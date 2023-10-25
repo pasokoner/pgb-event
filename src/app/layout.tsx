@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
 
 import { Toaster } from "react-hot-toast";
+import RecoilContextProvider from "@/providers/recoil-context-provider";
 
 const mulish = Mulish({
   subsets: ["latin"],
@@ -27,8 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${mulish.variable}`}>
         <TRPCReactProvider headers={headers()}>
-          {children}
-
+          <RecoilContextProvider>{children}</RecoilContextProvider>
           <Toaster />
         </TRPCReactProvider>
       </body>
