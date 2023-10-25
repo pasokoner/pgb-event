@@ -91,7 +91,7 @@ export function NewEvent({ isFlagCeremony }: NewEventProps) {
         <Button
           size="sm"
           variant="outline"
-          className="rounded-sm border-primary bg-white text-primary hover:bg-white hover:text-primary"
+          className="rounded-sm border-primary bg-white text-xs text-primary hover:bg-white hover:text-primary sm:text-base"
         >
           {isFlagCeremony ? "Flag Ceremony" : "Custom Event"}
         </Button>

@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "./_components/header";
 import Sidebar from "./_components/sidebar";
 

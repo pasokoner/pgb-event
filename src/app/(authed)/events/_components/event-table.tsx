@@ -17,7 +17,7 @@ export default function EventTable({ initialData }: EventTableProps) {
 
   return (
     <>
-      <div className="mb-10 flex justify-between">
+      <div className="mb-10 flex flex-col justify-between gap-2 sm:flex-row">
         <div>
           <h1 className="text-3xl font-bold text-gray-700">LIST OF EVENTS</h1>
           <p className="text-gray-500">Manage your events</p>

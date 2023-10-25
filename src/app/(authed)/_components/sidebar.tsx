@@ -1,6 +1,8 @@
+"use client";
+
 import SidebarLink from "./sidebar-link";
 
-import { LayoutDashboard, Users } from "lucide-react";
+import { CalendarCheck2, LayoutDashboard, Users } from "lucide-react";
 
 export default function Sidebar() {
   return (
@@ -23,7 +25,7 @@ export default function Sidebar() {
           </SidebarLink>
 
           <SidebarLink name="Events" path="/events">
-            <Users className="h-5 w-5" />
+            <CalendarCheck2 className="h-5 w-5" />
           </SidebarLink>
         </div>
       </div>

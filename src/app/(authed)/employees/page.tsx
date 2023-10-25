@@ -1,7 +1,7 @@
 import { api } from "@/trpc/server";
 
-import AddEmployee from "./add-employee";
-import EmployeeTable from "./employee-table";
+import AddEmployee from "./_components/add-employee";
+import EmployeeTable from "./_components/employee-table";
 
 export default async function EmployeesPage({
   searchParams,

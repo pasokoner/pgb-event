@@ -1,15 +1,15 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Scanner from "./scanner";
+import Scanner from "./_components/scanner";
 
 import { api } from "@/trpc/react";
 import { Circle } from "lucide-react";
 import { color } from "@/lib/config";
 
 import toast from "react-hot-toast";
-import RecentButton from "./recent-button";
-import UserRecentButton from "./user-recent-button";
+import RecentButton from "./_components/recent-button";
+import UserRecentButton from "./_components/user-recent-button";
 
 import { format } from "date-fns";
 
@@ -26,10 +26,10 @@ export default function ScannerPage({
   const { mutate } = api.attendance.create.useMutation({
     onSuccess: (data) => {
       toast.custom(
-        <div className="max-w-xs rounded-sm border-l-4 border-green-500 bg-white p-1.5 shadow-sm">
+        <div className="w-full max-w-md rounded-sm border-2 border-l-4 border-green-500 bg-white p-1.5 shadow-sm">
           <div className="text-lg font-bold">Attendance recorded</div>
           <div className="text-sm text-gray-500">
-            <span className="text-semibold text-black">{data.fullName}</span>
+            <span className="text-semibold text-black">{data.fullName}</span>{" "}
             has been recorded as attended.
           </div>
 
@@ -39,7 +39,7 @@ export default function ScannerPage({
         </div>,
       );
     },
-    onError(error, variables, context) {
+    onError(error) {
       toast.error(error.message);
     },
   });
