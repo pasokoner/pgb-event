@@ -1,14 +1,14 @@
-import { api } from "@/trpc/server";
-
+import { getPageSession } from "@/server/auth";
 import AddEmployee from "./_components/add-employee";
 import EmployeeTable from "./_components/employee-table";
+import { redirect } from "next/navigation";
 
-export default async function EmployeesPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
-  const data = await api.employee.all.query();
+export default async function EmployeesPage() {
+  const session = await getPageSession();
+
+  if (!session) {
+    redirect("/login");
+  }
 
   return (
     <div>
@@ -22,7 +22,7 @@ export default async function EmployeesPage({
           <AddEmployee />
         </div>
       </div>
-      <EmployeeTable initialData={data} />
+      <EmployeeTable />
     </div>
   );
 }

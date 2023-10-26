@@ -3,10 +3,11 @@
 import { DataTable } from "@/components/data-table";
 import { api } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
-import { Link, Focus } from "lucide-react";
+import { Focus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { columns } from "./columns";
 import EventButtons from "./event-buttons";
+import Link from "next/link";
 
 type EventControlProps = {
   eventId: string;

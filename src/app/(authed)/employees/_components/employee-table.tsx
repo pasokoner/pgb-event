@@ -1,16 +1,11 @@
 "use client";
-import { type RouterOutputs } from "@/trpc/shared";
 import { columns } from "./columns";
 import { DataTableEmployees } from "./data-table-employees";
 import { api } from "@/trpc/react";
 
-type EmployeeTableProps = {
-  initialData: RouterOutputs["employee"]["all"];
-};
-
-export default function EmployeeTable({ initialData }: EmployeeTableProps) {
+export default function EmployeeTable() {
   const { data } = api.employee.all.useQuery(undefined, {
-    initialData: initialData,
+    initialData: [],
   });
 
   return (

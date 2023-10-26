@@ -1,18 +1,13 @@
 "use client";
 
-import { type RouterOutputs } from "@/trpc/shared";
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
 import { NewEvent } from "./new-event";
 import { api } from "@/trpc/react";
 
-type EventTableProps = {
-  initialData: RouterOutputs["event"]["all"];
-};
-
-export default function EventTable({ initialData }: EventTableProps) {
+export default function EventTable() {
   const { data } = api.event.all.useQuery(undefined, {
-    initialData,
+    initialData: [],
   });
 
   return (
