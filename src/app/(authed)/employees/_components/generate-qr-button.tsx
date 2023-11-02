@@ -78,7 +78,7 @@ export default function GenerateQrButton({
       }
 
       // Add the binary data to the zip file
-      zip.file(`${item.id} - ${item.fullName}.png`, uint8Array);
+      zip.file(`${item.office} - ${item.fullName}.png`, uint8Array);
     }
 
     // Generate the zip file and provide a download link
