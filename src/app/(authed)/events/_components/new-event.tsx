@@ -25,6 +25,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type TNewEventSchema, newEventSchema } from "@/lib/types";
 
+import { useRouter } from "next/navigation";
+
 import {
   nextMonday,
   format,
@@ -49,15 +51,14 @@ type NewEventProps = {
 };
 
 export function NewEvent({ isFlagCeremony }: NewEventProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const utils = api.useContext();
-
   const { mutate, isLoading } = api.event.create.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       setOpen(false);
       form.reset();
-      await utils.event.all.invalidate();
+      router.refresh();
     },
   });
 
@@ -99,9 +100,6 @@ export function NewEvent({ isFlagCeremony }: NewEventProps) {
       <DialogContent className="gap-2 sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold">New event</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form

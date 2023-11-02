@@ -117,7 +117,7 @@ export function DataTableEmployees<TData, TValue>({
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Office" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-60 overflow-y-auto">
                 {offices.map((office) => (
                   <SelectItem value={office} key={office}>
                     {office}
@@ -135,7 +135,7 @@ export function DataTableEmployees<TData, TValue>({
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Office Assignments" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-60 overflow-y-auto">
                 {offices.map((office) => (
                   <SelectItem value={office} key={office}>
                     {office}
@@ -151,7 +151,7 @@ export function DataTableEmployees<TData, TValue>({
               }
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Office Assignments" />
+                <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
                 {["REGULAR", "JOBORDER"].map((status) => (
