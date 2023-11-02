@@ -9,7 +9,7 @@ export default async function Header() {
     <header className="mb-6 flex h-16 w-full items-center bg-white px-4">
       <SidebarToggle />
       <div className="ml-auto">
-        <HeaderDropdown initials={session!.user.username} />
+        {session && <HeaderDropdown initials={session.user.username} />}
       </div>
     </header>
   );
