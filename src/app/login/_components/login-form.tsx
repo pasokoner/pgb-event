@@ -15,9 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginForm() {
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -28,6 +30,7 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: TLoginSchema) {
+    setErrorMessage(null);
     const response = await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),
@@ -36,6 +39,14 @@ export default function LoginForm() {
 
     if (response.status === 0) {
       return router.refresh();
+    }
+
+    let responseError: unknown;
+
+    if (response.status !== 302) {
+      responseError = (await response.json()) as { error: string };
+
+      setErrorMessage((responseError as { error: string }).error);
     }
   }
 
@@ -77,6 +88,12 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
+
+        {errorMessage && (
+          <div className="text-sm font-medium text-destructive">
+            {errorMessage}
+          </div>
+        )}
         <Button type="submit" className="w-full rounded-sm" size="lg">
           Submit
         </Button>

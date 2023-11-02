@@ -33,6 +33,7 @@ export const POST = async (request: NextRequest) => {
       },
       attributes: {
         username,
+        role: "MEMBER",
       },
     });
     const session = await auth.createSession({

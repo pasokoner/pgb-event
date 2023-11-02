@@ -5,8 +5,8 @@ import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 
-import { Prisma } from "@prisma/client";
 import { loginSchema } from "@/lib/types";
+import { LuciaError } from "lucia";
 
 export const POST = async (request: NextRequest) => {
   const response = loginSchema.safeParse(await request.json());
@@ -46,20 +46,22 @@ export const POST = async (request: NextRequest) => {
     // this part depends on the database you're using
     // check for unique constraint error in user table
 
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      // The .code property can be accessed in a type-safe manner
-      if (e.code === "P2002") {
-        return NextResponse.json(
-          {
-            error: "Username already taken",
-          },
-          {
-            status: 400,
-          },
-        );
-      }
+    if (
+      e instanceof LuciaError &&
+      (e.message === "AUTH_INVALID_KEY_ID" ||
+        e.message === "AUTH_INVALID_PASSWORD")
+    ) {
+      // user does not exist
+      // or invalid password
+      return NextResponse.json(
+        {
+          error: "Incorrect username or password",
+        },
+        {
+          status: 400,
+        },
+      );
     }
-
     return NextResponse.json(
       {
         error: "An unknown error occurred",
