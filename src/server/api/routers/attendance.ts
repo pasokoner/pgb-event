@@ -66,8 +66,13 @@ export const attendanceRouter = createTRPCRouter({
 
         const { date, employee } = attendee;
 
-        const { firstName, middleName, lastName, extensionName, office } =
-          employee;
+        const {
+          firstName,
+          middleName = "",
+          lastName,
+          extensionName = "",
+          office,
+        } = employee;
 
         return {
           date,

@@ -63,9 +63,9 @@ export const eventRouter = createTRPCRouter({
 
         const {
           firstName,
-          middleName,
+          middleName = "",
           lastName,
-          extensionName,
+          extensionName = "",
           officeAcronym,
           officeAssignmentAcronym,
           employmentStatus,
@@ -109,9 +109,9 @@ export const eventRouter = createTRPCRouter({
 
         const {
           firstName,
-          middleName,
+          middleName = "",
           lastName,
-          extensionName,
+          extensionName = "",
           officeAssignmentAcronym,
         } = employee;
 
