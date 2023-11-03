@@ -20,6 +20,7 @@ enum UserRole {
 model User {
     id              String            @id @unique
     username        String            @unique
+    fullName        String            @default("ADMIN") @map("full_name")
     password        String?
     role            UserRole          @default(MEMBER)
     auth_session    Session[]

@@ -1,52 +1,30 @@
 // app/api/signup/route.ts
 import { auth } from "@/server/auth";
-import * as context from "next/headers";
 import { NextResponse } from "next/server";
 
-import type { NextRequest } from "next/server";
-
 import { Prisma } from "@prisma/client";
-import { loginSchema } from "@/lib/types";
 
-export const POST = async (request: NextRequest) => {
-  const response = loginSchema.safeParse(await request.json());
-
-  if (!response.success) {
-    return NextResponse.json(
-      {
-        error: "Bad input",
-      },
-      {
-        status: 400,
-      },
-    );
-  }
-
+export const POST = async () => {
   try {
-    const { username, password } = response.data;
+    if (process.env.NODE_ENV !== "development") {
+      throw new Error("UNAUTHORIZED");
+    }
 
     const user = await auth.createUser({
       key: {
         providerId: "username", // auth method
-        providerUserId: username.toLowerCase(), // unique id when using "username" auth method
-        password, // hashed by Lucia
+        providerUserId: "admin", // unique id when using "username" auth method
+        password: process.env.ADMIN_PASSWORD!, // hashed by Lucia
       },
       attributes: {
-        username,
-        role: "MEMBER",
+        username: "admin",
+        role: "ADMIN",
+        fullName: "admin",
       },
     });
-    const session = await auth.createSession({
-      userId: user.userId,
-      attributes: {},
-    });
-    const authRequest = auth.handleRequest(request.method, context);
-    authRequest.setSession(session);
+
     return new Response(null, {
       status: 302,
-      headers: {
-        Location: "/dashboard", // redirect to profile page
-      },
     });
   } catch (e) {
     // this part depends on the database you're using

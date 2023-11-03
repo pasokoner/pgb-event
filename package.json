@@ -13,7 +13,7 @@
     "db-seed": "tsc prisma/seed.ts && cat prisma/seed.js | node --input-type=\"commonjs\" && rm prisma/seed.js"
   },
   "prisma": {
-    "seed": "npm run db-seed"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -73,6 +73,7 @@
     "prettier-plugin-tailwindcss": "^0.5.1",
     "prisma": "^5.1.1",
     "tailwindcss": "^3.3.3",
+    "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   },
   "ct3aMetadata": {

@@ -3,6 +3,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log("Account creation");
+
+  await fetch("http://localhost:3000/api/auth/admin-creation", {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
+
+  console.log("Admin account created");
+
   console.log(`Start seeding ...`);
 
   await addRegulars();

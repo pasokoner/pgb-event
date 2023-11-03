@@ -5,6 +5,7 @@ declare namespace Lucia {
   type DatabaseUserAttributes = {
     username: string;
     role: import("@prisma/client").UserRole;
+    fullName: string;
   };
   type DatabaseSessionAttributes = Record<string, never>;
 }
