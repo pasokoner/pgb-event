@@ -51,11 +51,11 @@ export const columns: ColumnDef<Employee>[] = [
     header: "Position",
   },
   {
-    accessorKey: "office",
+    accessorKey: "officeAcronym",
     header: "Office",
   },
   {
-    accessorKey: "officeAssignment",
+    accessorKey: "officeAssignmentAcronym",
     header: "Office Assignment",
   },
   {

@@ -30,7 +30,7 @@ export default function GenerateQrButton({
     fullName: string;
   }>({
     fullName: employees[0]!.fullName,
-    office: employees[0]!.officeAssignment,
+    office: employees[0]!.officeAcronym!,
     id: employees[0]!.id,
   });
 
@@ -46,7 +46,7 @@ export default function GenerateQrButton({
       if (item) {
         selectedItems.push({
           fullName: item.fullName,
-          office: item.officeAssignment,
+          office: item.officeAcronym!,
           id: item.id,
         });
       }
