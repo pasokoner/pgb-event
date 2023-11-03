@@ -66,8 +66,8 @@ export const eventRouter = createTRPCRouter({
           middleName,
           lastName,
           extensionName,
-          office,
-          officeAssignment,
+          officeAcronym,
+          officeAssignmentAcronym,
           employmentStatus,
         } = employee;
 
@@ -75,8 +75,8 @@ export const eventRouter = createTRPCRouter({
           date,
           fullName: [firstName, middleName, lastName, extensionName].join(" "),
           employmentStatus,
-          office,
-          officeAssignment,
+          officeAcronym,
+          officeAssignmentAcronym,
         };
       });
     }),
@@ -98,7 +98,7 @@ export const eventRouter = createTRPCRouter({
               lastName: true,
               extensionName: true,
               middleName: true,
-              office: true,
+              officeAssignmentAcronym: true,
             },
           },
         },
@@ -107,14 +107,19 @@ export const eventRouter = createTRPCRouter({
       return attendees.map((attendee) => {
         const { date, employeeId, employee } = attendee;
 
-        const { firstName, middleName, lastName, extensionName, office } =
-          employee;
+        const {
+          firstName,
+          middleName,
+          lastName,
+          extensionName,
+          officeAssignmentAcronym,
+        } = employee;
 
         return {
           date,
           employeeId,
           fullName: [firstName, middleName, lastName, extensionName].join(" "),
-          office,
+          office: officeAssignmentAcronym,
         };
       });
     }),
