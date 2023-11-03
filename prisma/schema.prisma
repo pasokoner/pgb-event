@@ -55,18 +55,22 @@ enum EmploymentStatus {
 }
 
 model Employee {
-    id               String            @id @default(cuid())
-    firstName        String            @map("first_name")
-    lastName         String            @map("last_name")
-    middleName       String?           @map("middle_name")
-    extensionName    String?           @map("extension_name")
-    position         String
-    office           String
-    officeAssignment String            @map("office_assignment")
-    employmentStatus EmploymentStatus
-    eventAttendance  EventAttendance[]
+    id                      String            @id @default(cuid())
+    firstName               String            @map("first_name")
+    lastName                String            @map("last_name")
+    middleName              String?           @map("middle_name")
+    extensionName           String?           @map("extension_name")
+    position                String?
+    genericPosition         String?           @map("generic_position")
+    officeAcronym           String?           @map("office_acronym")
+    officeAssignmentAcronym String?           @map("office_assignment_acronym")
+    employmentStatus        EmploymentStatus  @map("employment_status")
+    eventAttendance         EventAttendance[]
+    office                  Office?           @relation("Office", fields: [officeAcronym], references: [acronym], onDelete: Cascade)
+    officeAssignment        Office?           @relation("OfficeAssignment", fields: [officeAssignmentAcronym], references: [acronym], onDelete: Cascade)
 
-    @@map("employees")
+    @@index([officeAcronym])
+    @@index([officeAssignmentAcronym])
 }
 
 enum EventStatus {
@@ -102,4 +106,11 @@ model EventAttendance {
     @@index([eventId])
     @@index([employeeId])
     @@index([userId])
+}
+
+model Office {
+    acronym                   String     @id @unique
+    name                      String?
+    employeesOffice           Employee[] @relation("Office")
+    employeesOfficeAssignment Employee[] @relation("OfficeAssignment")
 }

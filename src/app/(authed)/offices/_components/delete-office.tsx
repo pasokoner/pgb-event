@@ -12,11 +12,11 @@ import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-type DeleteUserProps = {
+type DeleteOfficeProps = {
   id: string;
 };
 
-export default function DeleteUser({ id }: DeleteUserProps) {
+export default function DeleteOffice({ id }: DeleteOfficeProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 

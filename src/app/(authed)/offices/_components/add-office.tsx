@@ -23,18 +23,18 @@ import {
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { type TNewUserSchema, newUserSchema } from "@/lib/types";
+import { type TNewOfficeSchema, newOfficeSchema } from "@/lib/types";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
 import { Input } from "@/components/ui/input";
 
-export default function AddUser() {
+export default function AddOffice() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const { mutate, isLoading, error } = api.user.create.useMutation({
+  const { mutate, isLoading, error } = api.office.create.useMutation({
     onSuccess: () => {
       setOpen(false);
       form.reset();
@@ -42,16 +42,15 @@ export default function AddUser() {
     },
   });
 
-  const form = useForm<TNewUserSchema>({
-    resolver: zodResolver(newUserSchema),
+  const form = useForm<TNewOfficeSchema>({
+    resolver: zodResolver(newOfficeSchema),
     defaultValues: {
-      username: "",
-      password: "",
-      fullName: "",
+      acronym: "",
+      name: undefined,
     },
   });
 
-  function onSubmit(data: TNewUserSchema) {
+  function onSubmit(data: TNewOfficeSchema) {
     mutate(data);
   }
 
@@ -65,7 +64,7 @@ export default function AddUser() {
       </DialogTrigger>
       <DialogContent className="gap-2 sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">New user</DialogTitle>
+          <DialogTitle className="text-xl font-bold">New office</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -74,10 +73,10 @@ export default function AddUser() {
           >
             <FormField
               control={form.control}
-              name="username"
+              name="acronym"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Office Acronym</FormLabel>
                   <FormControl>
                     <Input autoComplete="off" {...field} />
                   </FormControl>
@@ -88,26 +87,16 @@ export default function AddUser() {
 
             <FormField
               control={form.control}
-              name="password"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Office Name</FormLabel>
                   <FormControl>
-                    <Input autoComplete="off" type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
+                    <Input
+                      placeholder="(optional)"
+                      autoComplete="off"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

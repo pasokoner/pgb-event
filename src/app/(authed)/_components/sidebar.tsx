@@ -4,7 +4,13 @@ import { useOnClickOutside } from "usehooks-ts";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import SidebarLink from "./sidebar-link";
 
-import { CalendarCheck2, LayoutDashboard, UserCog2, Users } from "lucide-react";
+import {
+  Building,
+  CalendarCheck2,
+  LayoutDashboard,
+  UserCog2,
+  Users,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sidebarState } from "../_utils/sidebar";
 import { useRecoilState } from "recoil";
@@ -59,6 +65,10 @@ export default function Sidebar() {
 
           <SidebarLink name="Events" path="/events">
             <CalendarCheck2 className="h-5 w-5" />
+          </SidebarLink>
+
+          <SidebarLink name="Offices" path="/offices">
+            <Building className="h-5 w-5" />
           </SidebarLink>
 
           <SidebarLink name="Users" path="/users">
