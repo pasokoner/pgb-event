@@ -42,6 +42,7 @@ import {
 import { offices } from "@/lib/config";
 import { type Employee } from "./columns";
 import GenerateQrButton from "./generate-qr-button";
+import OfficeItems from "./office-items";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -118,11 +119,7 @@ export function DataTableEmployees<TData, TValue>({
                 <SelectValue placeholder="Office" />
               </SelectTrigger>
               <SelectContent className="max-h-60 overflow-y-auto">
-                {offices.map((office) => (
-                  <SelectItem value={office} key={office}>
-                    {office}
-                  </SelectItem>
-                ))}
+                <OfficeItems />
               </SelectContent>
             </Select>
 
@@ -136,11 +133,7 @@ export function DataTableEmployees<TData, TValue>({
                 <SelectValue placeholder="Office Assignments" />
               </SelectTrigger>
               <SelectContent className="max-h-60 overflow-y-auto">
-                {offices.map((office) => (
-                  <SelectItem value={office} key={office}>
-                    {office}
-                  </SelectItem>
-                ))}
+                <OfficeItems />
               </SelectContent>
             </Select>
 
@@ -178,14 +171,19 @@ export function DataTableEmployees<TData, TValue>({
           </PopoverContent>
         </Popover>
       </div>
-      {Object.keys(rowSelection).length !== 0 && (
-        <div className="mb-2 flex justify-between">
+      <div className="mb-2 flex gap-x-2">
+        <GenerateQrButton
+          employees={data as Employee[]}
+          indexes={Object.keys(rowSelection)}
+          all={true}
+        />
+        {Object.keys(rowSelection).length !== 0 && (
           <GenerateQrButton
             employees={data as Employee[]}
             indexes={Object.keys(rowSelection)}
           />
-        </div>
-      )}
+        )}
+      </div>
       <div className="rounded-sm">
         <Table>
           <TableHeader>

@@ -20,9 +20,11 @@ import { useRef, useState } from "react";
 export default function GenerateQrButton({
   employees,
   indexes,
+  all,
 }: {
   employees: Employee[];
   indexes: string[];
+  all?: boolean;
 }) {
   const [current, setCurrent] = useState<{
     id: string;
@@ -40,15 +42,25 @@ export default function GenerateQrButton({
     const selectedItems: { id: string; office: string; fullName: string }[] =
       [];
 
-    for (const index of indexes) {
-      const item = employees[Number(index)];
-
-      if (item) {
+    if (all) {
+      for (const employee of employees) {
         selectedItems.push({
-          fullName: item.fullName,
-          office: item.officeAcronym!,
-          id: item.id,
+          fullName: employee.fullName,
+          office: employee.officeAcronym!,
+          id: employee.id,
         });
+      }
+    } else {
+      for (const index of indexes) {
+        const employee = employees[Number(index)];
+
+        if (employee) {
+          selectedItems.push({
+            fullName: employee.fullName,
+            office: employee.officeAcronym!,
+            id: employee.id,
+          });
+        }
       }
     }
 
@@ -65,7 +77,7 @@ export default function GenerateQrButton({
       await new Promise((resolve) => {
         setTimeout(() => {
           resolve("");
-        }, 300);
+        }, 50);
       });
 
       const url = await toPng(imageRef.current!, { cacheBust: false });
@@ -97,7 +109,7 @@ export default function GenerateQrButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Generate QR</Button>
+        <Button>{all ? "Generate All" : "Generate QR"}</Button>
       </DialogTrigger>
       <DialogContent className="max-w-xs">
         <DialogHeader>

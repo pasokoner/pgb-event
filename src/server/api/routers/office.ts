@@ -81,4 +81,11 @@ export const officeRouter = createTRPCRouter({
 
       return deleteOffice;
     }),
+  getAcronyms: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.office.findMany({
+      select: {
+        acronym: true,
+      },
+    });
+  }),
 });
