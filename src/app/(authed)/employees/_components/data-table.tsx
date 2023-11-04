@@ -85,8 +85,10 @@ export function DataTableEmployees<TData, TValue>({
   React.useEffect(() => {
     const { office, officeAssignment, status } = customFilters;
     setRowSelection({});
-    table.getColumn("office")?.setFilterValue(office);
-    table.getColumn("officeAssignment")?.setFilterValue(officeAssignment);
+    table.getColumn("officeAcronym")?.setFilterValue(office);
+    table
+      .getColumn("officeAssignmentAcronym")
+      ?.setFilterValue(officeAssignment);
     table.getColumn("employmentStatus")?.setFilterValue(status);
   }, [customFilters, table]);
 
