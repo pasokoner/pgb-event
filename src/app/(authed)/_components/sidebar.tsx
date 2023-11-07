@@ -55,16 +55,16 @@ export default function Sidebar() {
 
       <div className="h-full space-y-4 overflow-y-auto px-2">
         <div className="space-y-1">
-          <SidebarLink name="Dashboard" path="/dashboard">
+          {/* <SidebarLink name="Dashboard" path="/dashboard">
             <LayoutDashboard className="h-5 w-5" />
+          </SidebarLink> */}
+
+          <SidebarLink name="Events" path="/events">
+            <CalendarCheck2 className="h-5 w-5" />
           </SidebarLink>
 
           <SidebarLink name="Employees" path="/employees">
             <Users className="h-5 w-5" />
-          </SidebarLink>
-
-          <SidebarLink name="Events" path="/events">
-            <CalendarCheck2 className="h-5 w-5" />
           </SidebarLink>
 
           <SidebarLink name="Offices" path="/offices">
