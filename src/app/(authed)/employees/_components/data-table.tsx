@@ -43,6 +43,7 @@ import { offices } from "@/lib/config";
 import { type Employee } from "./columns";
 import GenerateQrButton from "./generate-qr-button";
 import OfficeItems from "./office-items";
+import { EmploymentStatus } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -149,7 +150,7 @@ export function DataTableEmployees<TData, TValue>({
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                {["REGULAR", "JOBORDER"].map((status) => (
+                {Object.keys(EmploymentStatus).map((status) => (
                   <SelectItem value={status} key={status}>
                     {status}
                   </SelectItem>

@@ -28,6 +28,7 @@ export const columns: ColumnDef<AllEvent>[] = [
     header: "Employees Assignment",
   },
   {
+    id: "action",
     accessorKey: "acronym",
     header: "Actions",
     cell: ({ row }) => {

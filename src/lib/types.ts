@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { isPast, isToday } from "date-fns";
+import { EmploymentStatus } from "@prisma/client";
 
 export const loginSchema = z.object({
   username: z.string(),
@@ -8,6 +9,29 @@ export const loginSchema = z.object({
 });
 
 export type TLoginSchema = z.infer<typeof loginSchema>;
+
+export const newEmployeeSchema = z.object({
+  firstName: z.string().trim().min(2, { message: "Please enter a name" }),
+  middleName: z.string().trim().optional(),
+  lastName: z.string().trim().min(2, { message: "Please enter a name" }),
+  extensionName: z.string().trim().optional(),
+  position: z.string().trim().min(2, { message: "Please enter a position" }),
+  genericPosition: z
+    .string()
+    .trim()
+    .min(2, { message: "Please enter a position" }),
+  employmentStatus: z.nativeEnum(EmploymentStatus),
+  officeAcronym: z
+    .string()
+    .trim()
+    .min(2, { message: "Please enter an office" }),
+  officeAssignmentAcronym: z
+    .string()
+    .trim()
+    .min(2, { message: "Please enter an office" }),
+});
+
+export type TNewEmployeeSchema = z.infer<typeof newEmployeeSchema>;
 
 export const newEventSchema = z.object({
   name: z.string().trim().min(5, { message: "Please be descriptive" }),

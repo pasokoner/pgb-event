@@ -59,7 +59,7 @@ export default function AddOffice() {
       <DialogTrigger asChild>
         <Button size="sm" className="rounded-sm">
           <UserPlus className="mr-2" />
-          Add User
+          Add Office
         </Button>
       </DialogTrigger>
       <DialogContent className="gap-2 sm:max-w-[425px]">
