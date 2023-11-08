@@ -48,11 +48,16 @@ export default function GenerateReport() {
     setShow(false);
   }
 
-  async function createExcelFromTemplate() {
+  async function createExcelFromTemplate({
+    motherUnit,
+  }: {
+    motherUnit?: boolean;
+  }) {
     if (data && reportData) {
-      const dataByOffice = groupBy(
-        data.employees,
-        (employee) => employee.officeAcronym!,
+      const dataByOffice = groupBy(data.employees, (employee) =>
+        motherUnit
+          ? employee.officeAssignmentAcronym!
+          : employee.officeAcronym!,
       );
 
       // Create a new Excel workbook
@@ -193,10 +198,12 @@ export default function GenerateReport() {
       {data && (
         <div>
           <div className="grid grid-cols-2 gap-x-2">
-            <Button onClick={createExcelFromTemplate}>
+            <Button onClick={() => createExcelFromTemplate({})}>
               Generate By Office
             </Button>
-            <Button onClick={createExcelFromTemplate}>
+            <Button
+              onClick={() => createExcelFromTemplate({ motherUnit: true })}
+            >
               Generate By Mother Office
             </Button>
           </div>
