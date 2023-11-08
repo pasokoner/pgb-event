@@ -13,6 +13,7 @@ import { color } from "@/lib/config";
 import { Button } from "@/components/ui/button";
 import { Focus, Settings } from "lucide-react";
 import Link from "next/link";
+import DeleteEvent from "./delete-event";
 
 type AllEventOutput = RouterOutputs["event"]["all"];
 
@@ -56,7 +57,8 @@ export const columns: ColumnDef<AllEvent>[] = [
       const id = row.getValue("id");
 
       return (
-        <div className="flex ">
+        <div className="flex items-center gap-x-1">
+          <DeleteEvent id={id as string} />
           <Button variant="ghost" size="icon" asChild>
             <Link href={`/events/${id as string}`}>
               <Settings />

@@ -1,6 +1,7 @@
 import { newEventSchema, newReportSchema } from "@/lib/types";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { EventStatus } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 import z from "zod";
 
@@ -29,6 +30,21 @@ export const eventRouter = createTRPCRouter({
       return await ctx.db.event.create({
         data: input,
       });
+    }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { session, db } = ctx;
+
+      if (session.user.userRole !== "ADMIN") {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const deleteEvent = await db.event.delete({
+        where: { id: input.id },
+      });
+
+      return deleteEvent;
     }),
   updateStatus: protectedProcedure
     .input(z.object({ id: z.string(), status: z.nativeEnum(EventStatus) }))
