@@ -5,6 +5,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import SidebarLink from "./sidebar-link";
 
 import {
+  BarChartHorizontal,
   Building,
   CalendarCheck2,
   LayoutDashboard,
@@ -69,6 +70,10 @@ export default function Sidebar() {
 
           <SidebarLink name="Offices" path="/offices">
             <Building className="h-5 w-5" />
+          </SidebarLink>
+
+          <SidebarLink name="Generate Report" path="/generate-report">
+            <BarChartHorizontal className="h-5 w-5" />
           </SidebarLink>
 
           <SidebarLink name="Users" path="/users">

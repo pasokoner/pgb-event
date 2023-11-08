@@ -69,3 +69,20 @@ export const newOfficeSchema = z.object({
 });
 
 export type TNewOfficeSchema = z.infer<typeof newOfficeSchema>;
+
+export const newReportSchema = z.object({
+  title: z.string().trim().min(5, { message: "Please be descriptive" }),
+  subtitle: z.string().trim().optional(),
+  fromDate: z.date(),
+  toDate: z.date(),
+  preparedBy: z.string().trim().min(5, { message: "Please enter your name" }),
+  position: z.string().trim().min(5, { message: "Please enter your position" }),
+  notedBy: z.string().trim().min(5, { message: "Please enter a name" }),
+  officerPosition: z
+    .string()
+    .trim()
+    .min(5, { message: "Please enter a position" }),
+});
+
+export type TNewReportSchema = z.infer<typeof newReportSchema>;
+ 

@@ -1,4 +1,4 @@
-import { newEventSchema } from "@/lib/types";
+import { newEventSchema, newReportSchema } from "@/lib/types";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { EventStatus } from "@prisma/client";
 
@@ -17,7 +17,7 @@ export const eventRouter = createTRPCRouter({
   all: protectedProcedure.query(async ({ ctx }) => {
     const events = await ctx.db.event.findMany({
       orderBy: {
-        createdAt: "desc",
+        date: "desc",
       },
     });
 
@@ -122,5 +122,69 @@ export const eventRouter = createTRPCRouter({
           office: officeAssignmentAcronym,
         };
       });
+    }),
+  getReport: protectedProcedure
+    .input(
+      newReportSchema.omit({
+        notedBy: true,
+        preparedBy: true,
+        title: true,
+        subtitle: true,
+        position: true,
+        officerPosition: true,
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const events = await ctx.db.event.findMany({
+        where: {
+          date: {
+            gte: input.fromDate,
+            lte: input.toDate,
+          },
+          status: "ENDED",
+        },
+      });
+      const employees = await ctx.db.employee.findMany({
+        orderBy: {
+          lastName: "asc",
+        },
+        include: {
+          eventAttendance: {
+            where: {
+              event: {
+                date: {
+                  gte: input.fromDate,
+                  lte: input.toDate,
+                },
+                status: "ENDED",
+              },
+            },
+          },
+        },
+      });
+
+      return {
+        events,
+        employees: employees.map((e) => {
+          const {
+            firstName,
+            middleName,
+            lastName,
+            extensionName,
+            officeAcronym,
+            officeAssignmentAcronym,
+            eventAttendance,
+          } = e;
+
+          return {
+            fullName: [firstName, middleName, lastName, extensionName].join(
+              " ",
+            ),
+            eventAttendance,
+            officeAcronym,
+            officeAssignmentAcronym,
+          };
+        }),
+      };
     }),
 });

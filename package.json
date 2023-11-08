@@ -39,6 +39,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
+    "exceljs": "^4.4.0",
     "html-to-image": "^1.11.11",
     "jszip": "^3.10.1",
     "lucia": "^2.7.1",
