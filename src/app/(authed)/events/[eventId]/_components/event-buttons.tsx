@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { api } from "@/trpc/react";
-import { useRouter } from "next/navigation";
 
 type EventButtonsProps = {
   status: EventStatus;
@@ -21,16 +20,16 @@ type EventButtonsProps = {
 };
 
 export default function EventButtons({ status, id }: EventButtonsProps) {
-  const router = useRouter();
+  const utils = api.useContext();
 
   const [open, setOpen] = useState(false);
   const [newStatus, setNewStatus] = useState<EventStatus>(status);
 
   const { mutate: updateStatus, isLoading } =
     api.event.updateStatus.useMutation({
-      onSuccess: () => {
+      onSuccess: async () => {
+        await utils.event.eventById.invalidate(id);
         setOpen(false);
-        router.refresh();
       },
     });
 
