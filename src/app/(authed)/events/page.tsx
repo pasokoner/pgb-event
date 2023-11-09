@@ -20,10 +20,12 @@ export default async function EventsPage() {
           <p className="text-gray-500">Manage your events</p>
         </div>
 
-        <div className="space-x-2">
-          <NewEvent />
-          <NewEvent isFlagCeremony />
-        </div>
+        {session.user.userRole === "ADMIN" && (
+          <div className="space-x-2">
+            <NewEvent />
+            <NewEvent isFlagCeremony />
+          </div>
+        )}
       </div>
       <Suspense fallback={<TableSkeleton />}>
         <EventsTable />

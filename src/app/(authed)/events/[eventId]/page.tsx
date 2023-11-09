@@ -14,6 +14,10 @@ export default async function EventPage({
     redirect("/login");
   }
 
+  if (session.user.userRole !== "ADMIN") {
+    redirect("/events");
+  }
+
   const event = await api.event.eventById.query(params.eventId);
 
   if (!event) {

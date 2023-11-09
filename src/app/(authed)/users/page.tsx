@@ -13,7 +13,7 @@ export default async function EventsPage() {
   }
 
   if (session.user.userRole !== "ADMIN") {
-    redirect("/dashboard");
+    redirect("/events");
   }
 
   return (

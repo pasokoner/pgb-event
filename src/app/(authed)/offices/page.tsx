@@ -13,7 +13,7 @@ export default async function OfficesPage() {
   }
 
   if (session.user.userRole !== "ADMIN") {
-    redirect("/dashboard");
+    redirect("/events");
   }
 
   return (

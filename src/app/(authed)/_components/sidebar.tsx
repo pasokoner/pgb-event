@@ -8,7 +8,6 @@ import {
   BarChartHorizontal,
   Building,
   CalendarCheck2,
-  LayoutDashboard,
   UserCog2,
   Users,
 } from "lucide-react";
@@ -18,7 +17,11 @@ import { useRecoilState } from "recoil";
 import SidebarToggle from "./sidebar-toggle";
 import { useRef } from "react";
 
-export default function Sidebar() {
+type SidebarProps = {
+  isAdmin?: boolean;
+};
+
+export default function Sidebar({ isAdmin = false }: SidebarProps) {
   const lg = useMediaQuery("only screen and (min-width: 1024px)");
 
   const ref = useRef(null);
@@ -56,10 +59,6 @@ export default function Sidebar() {
 
       <div className="h-full space-y-4 overflow-y-auto px-2">
         <div className="space-y-1">
-          {/* <SidebarLink name="Dashboard" path="/dashboard">
-            <LayoutDashboard className="h-5 w-5" />
-          </SidebarLink> */}
-
           <SidebarLink name="Events" path="/events">
             <CalendarCheck2 className="h-5 w-5" />
           </SidebarLink>
@@ -68,17 +67,21 @@ export default function Sidebar() {
             <Users className="h-5 w-5" />
           </SidebarLink>
 
-          <SidebarLink name="Offices" path="/offices">
-            <Building className="h-5 w-5" />
-          </SidebarLink>
+          {isAdmin && (
+            <SidebarLink name="Offices" path="/offices">
+              <Building className="h-5 w-5" />
+            </SidebarLink>
+          )}
 
           <SidebarLink name="Generate Report" path="/generate-report">
             <BarChartHorizontal className="h-5 w-5" />
           </SidebarLink>
 
-          <SidebarLink name="Users" path="/users">
-            <UserCog2 className="h-5 w-5" />
-          </SidebarLink>
+          {isAdmin && (
+            <SidebarLink name="Users" path="/users">
+              <UserCog2 className="h-5 w-5" />
+            </SidebarLink>
+          )}
         </div>
       </div>
     </aside>
