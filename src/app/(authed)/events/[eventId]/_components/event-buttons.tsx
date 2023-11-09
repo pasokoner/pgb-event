@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { api } from "@/trpc/react";
+import { Input } from "@/components/ui/input";
+import { format } from "date-fns";
 
 type EventButtonsProps = {
   status: EventStatus;
@@ -24,6 +26,7 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
 
   const [open, setOpen] = useState(false);
   const [newStatus, setNewStatus] = useState<EventStatus>(status);
+  const [late, setLate] = useState(format(new Date(), "HH:mm"));
 
   const { mutate: updateStatus, isLoading } =
     api.event.updateStatus.useMutation({
@@ -39,7 +42,7 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
   }
 
   function onConfirm() {
-    updateStatus({ status: newStatus, id });
+    updateStatus({ status: newStatus, id, late });
   }
 
   return (
@@ -93,7 +96,14 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
           <DialogHeader>
             <DialogTitle>Confirm Action</DialogTitle>
           </DialogHeader>
-          <div className="grid w-full grid-cols-2 gap-x-2">
+          <div className="grid w-full grid-cols-2 gap-2">
+            <Input
+              type="time"
+              defaultValue={late}
+              className="col-span-2"
+              onChange={(v) => setLate(v.currentTarget.value)}
+            />
+
             <DialogClose asChild>
               <Button
                 variant="outline"

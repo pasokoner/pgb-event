@@ -85,6 +85,7 @@ model Event {
     name           String
     date           DateTime
     type           String
+    late           DateTime          @default(now())
     status         EventStatus       @default(UPCOMING)
     eventAttendees EventAttendance[]
     updatedAt      DateTime          @updatedAt @map("updated_at")

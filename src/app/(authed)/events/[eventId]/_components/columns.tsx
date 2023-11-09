@@ -28,11 +28,20 @@ export const columns: ColumnDef<Attendees>[] = [
   },
   {
     accessorKey: "date",
-    header: "Date arrived",
+    header: "Date & Time Arrived",
     cell: ({ row }) => {
-      const formatted = format(new Date(row.getValue("date")), "MM/dd/yyyy");
+      const formattedDate = format(
+        new Date(row.getValue("date")),
+        "MM/dd/yyyy",
+      );
+      const formattedTime = format(new Date(row.getValue("date")), "HH:mm a");
 
-      return <div className="text-left font-bold">{formatted}</div>;
+      return (
+        <div className="flex flex-col">
+          <div className="text-left font-bold">{formattedDate}</div>
+          <div className="text-left">{formattedTime}</div>
+        </div>
+      );
     },
   },
 ];

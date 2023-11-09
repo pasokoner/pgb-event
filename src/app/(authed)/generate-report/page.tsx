@@ -114,6 +114,16 @@ export default function GenerateReport() {
             ? `${employee.eventAttendance.length}`
             : `${0}`;
 
+          let late = 0;
+
+          for (const attendance of employee.eventAttendance) {
+            if (attendance.date > attendance.event.late) {
+              late += 1;
+            }
+          }
+
+          copySheet.getCell(`I${7 + i}`).value = `${late}`;
+
           copySheet.getCell(`C${7 + i}`).alignment = {
             horizontal: "center",
             vertical: "middle",

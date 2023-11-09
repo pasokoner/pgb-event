@@ -34,7 +34,7 @@ export default function ScannerPage({
           </div>
 
           <div className="flex text-xs">
-            <div className="ml-auto">{format(data.date, "hh:mm a")}</div>
+            <div className="ml-auto">{format(data.date, "HH:mm a")}</div>
           </div>
         </div>,
       );

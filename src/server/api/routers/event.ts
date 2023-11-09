@@ -47,11 +47,24 @@ export const eventRouter = createTRPCRouter({
       return deleteEvent;
     }),
   updateStatus: protectedProcedure
-    .input(z.object({ id: z.string(), status: z.nativeEnum(EventStatus) }))
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.nativeEnum(EventStatus),
+        late: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
+      const [hours, minutes] = input.late.split(":");
+
+      const dateWithSpecifiedTime = new Date();
+      dateWithSpecifiedTime.setHours(parseInt(hours!, 10));
+      dateWithSpecifiedTime.setMinutes(parseInt(minutes!, 10));
+
       return await ctx.db.event.update({
         where: {
           id: input.id,
+          late: dateWithSpecifiedTime,
         },
         data: {
           status: input.status,
@@ -173,6 +186,13 @@ export const eventRouter = createTRPCRouter({
                   lte: input.toDate,
                 },
                 status: "ENDED",
+              },
+            },
+            include: {
+              event: {
+                select: {
+                  late: true,
+                },
               },
             },
           },
