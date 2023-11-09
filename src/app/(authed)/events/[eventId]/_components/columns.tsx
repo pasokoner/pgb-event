@@ -15,11 +15,11 @@ export const columns: ColumnDef<Attendees>[] = [
     header: "Name",
   },
   {
-    accessorKey: "office",
+    accessorKey: "officeAcronym",
     header: "Office",
   },
   {
-    accessorKey: "officeAssignment",
+    accessorKey: "officeAssignmentAcronym",
     header: "Office Assignment",
   },
   {
