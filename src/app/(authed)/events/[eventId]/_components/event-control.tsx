@@ -1,13 +1,17 @@
 "use client";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { DataTable } from "@/components/data-table";
 import { api } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
 import { Focus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { columns as employeesColumns } from "./employees-column";
 import { columns } from "./columns";
 import EventButtons from "./event-buttons";
 import Link from "next/link";
+import { DataTableEmployees } from "./employees-table";
 
 type EventControlProps = {
   eventId: string;
@@ -32,6 +36,10 @@ export default function EventControl({
     },
   );
 
+  const employees = api.employee.all.useQuery(undefined, {
+    initialData: [],
+  });
+
   if (!event.data) {
     return <></>;
   }
@@ -55,7 +63,21 @@ export default function EventControl({
         </div>
       </div>
 
-      <DataTable data={attendance.data} columns={columns} />
+      <Tabs defaultValue="present">
+        <TabsList>
+          <TabsTrigger value="present">Present</TabsTrigger>
+          <TabsTrigger value="employees">Employees</TabsTrigger>
+        </TabsList>
+        <TabsContent value="present">
+          <DataTable data={attendance.data} columns={columns} />
+        </TabsContent>
+        <TabsContent value="employees">
+          <DataTableEmployees
+            data={employees.data}
+            columns={employeesColumns}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

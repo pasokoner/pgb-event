@@ -95,4 +95,13 @@ export const attendanceRouter = createTRPCRouter({
         });
       }
     }),
+  search: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+
+    return await ctx.db.employee.findMany({
+      where: {
+        
+      }
+    })
+
+  })
 });
