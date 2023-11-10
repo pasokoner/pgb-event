@@ -74,7 +74,7 @@ export const columns: ColumnDef<AllEvent>[] = [
             onClick={onDelete}
             variant="ghost"
             size="icon"
-            className="h-5 w-5"
+            className="h-4 w-4"
           >
             <Trash2 className="text-destructive" />
           </Button>

@@ -30,7 +30,7 @@ export default function DeleteEvent({ id }: DeleteEventProps) {
   return (
     <Dialog open={open} onOpenChange={(o) => setOpen(o)}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-6 w-6">
+        <Button variant="ghost" size="icon" className="h-4 w-4">
           <Trash2 className="text-destructive" />
         </Button>
       </DialogTrigger>

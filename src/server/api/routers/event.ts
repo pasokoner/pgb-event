@@ -93,6 +93,7 @@ export const eventRouter = createTRPCRouter({
     .input(
       z.object({
         eventId: z.string(),
+        present: z.boolean().default(true),
       }),
     )
     .query(async ({ ctx, input }) => {

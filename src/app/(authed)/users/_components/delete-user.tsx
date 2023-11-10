@@ -30,7 +30,7 @@ export default function DeleteUser({ id }: DeleteUserProps) {
   return (
     <Dialog open={open} onOpenChange={(o) => setOpen(o)}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-5 w-5">
+        <Button variant="ghost" size="icon" className="h-4 w-4">
           <Trash2 className="text-destructive" />
         </Button>
       </DialogTrigger>

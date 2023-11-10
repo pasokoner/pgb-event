@@ -57,14 +57,14 @@ export const columns: ColumnDef<AllEvent>[] = [
       const id = row.getValue("id");
 
       return (
-        <div className="flex items-center gap-x-1">
+        <div className="flex items-center gap-x-3">
           <DeleteEvent id={id as string} />
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" className="h-4 w-4" asChild>
             <Link href={`/events/${id as string}`}>
               <Settings />
             </Link>
           </Button>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="h-4 w-4" asChild>
             <Link href={`/events/${id as string}/scanner`}>
               <Focus />
             </Link>

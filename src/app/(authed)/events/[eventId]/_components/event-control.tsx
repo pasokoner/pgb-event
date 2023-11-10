@@ -54,10 +54,6 @@ export default function EventControl({
           <EventButtons status={event.data.status} id={event.data.id} />
         </div>
       </div>
-      {/* <div className="mb-6 grid grid-cols-2 gap-4">
-      <div className="h-40 w-full bg-white shadow-sm"></div>
-      <div className="h-40 w-full bg-white shadow-sm"></div>
-    </div> */}
 
       <DataTable data={attendance.data} columns={columns} />
     </div>
