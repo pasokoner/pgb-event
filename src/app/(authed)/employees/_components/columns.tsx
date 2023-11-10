@@ -6,6 +6,8 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { type RouterOutputs } from "@/trpc/shared";
+import DeleteEmployee from "./delete-employee";
+import EditEmployee from "./edit-employee";
 
 type EmployeesOutput = RouterOutputs["employee"]["all"];
 
@@ -61,5 +63,19 @@ export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: "employmentStatus",
     header: "Status",
+  },
+  {
+    accessorKey: "id",
+    header: "Actions",
+    cell: ({ row }) => {
+      const id = row.getValue("id");
+
+      return (
+        <div className="flex items-center gap-x-3">
+          <DeleteEmployee id={id as string} />
+          <EditEmployee id={id as string} />
+        </div>
+      );
+    },
   },
 ];

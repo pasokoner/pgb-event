@@ -122,8 +122,6 @@ export default function GenerateReport() {
             }
           }
 
-          copySheet.getCell(`I${7 + i}`).value = `${late}`;
-
           copySheet.getCell(`C${7 + i}`).alignment = {
             horizontal: "center",
             vertical: "middle",
@@ -132,6 +130,10 @@ export default function GenerateReport() {
             horizontal: "center",
             vertical: "middle",
           };
+
+          if (late !== 0) {
+            copySheet.getCell(`I${7 + i}`).value = `${late}`;
+          }
           i += 1;
         }
 

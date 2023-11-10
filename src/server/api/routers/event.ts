@@ -51,6 +51,23 @@ export const eventRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         status: z.nativeEnum(EventStatus),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.event.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: input.status,
+        },
+      });
+    }),
+  startEvent: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.nativeEnum(EventStatus),
         late: z.string(),
       }),
     )
@@ -71,6 +88,7 @@ export const eventRouter = createTRPCRouter({
         },
       });
     }),
+
   attendees: protectedProcedure
     .input(
       z.object({

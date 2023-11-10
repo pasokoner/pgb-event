@@ -33,6 +33,12 @@ export const newEmployeeSchema = z.object({
 
 export type TNewEmployeeSchema = z.infer<typeof newEmployeeSchema>;
 
+export const editEmployeeSchema = newEmployeeSchema.extend({
+  id: z.string(),
+});
+
+export type TEditEmployeeSchema = z.infer<typeof editEmployeeSchema>;
+
 export const newEventSchema = z.object({
   name: z.string().trim().min(5, { message: "Please be descriptive" }),
   date: z.date().refine(

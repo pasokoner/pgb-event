@@ -28,8 +28,16 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
   const [newStatus, setNewStatus] = useState<EventStatus>(status);
   const [late, setLate] = useState(format(new Date(), "HH:mm"));
 
-  const { mutate: updateStatus, isLoading } =
+  const { mutate: updateStatus, isLoading: isUpdating } =
     api.event.updateStatus.useMutation({
+      onSuccess: async () => {
+        await utils.event.eventById.invalidate(id);
+        setOpen(false);
+      },
+    });
+
+  const { mutate: startEvent, isLoading: isStarting } =
+    api.event.startEvent.useMutation({
       onSuccess: async () => {
         await utils.event.eventById.invalidate(id);
         setOpen(false);
@@ -42,7 +50,11 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
   }
 
   function onConfirm() {
-    updateStatus({ status: newStatus, id, late });
+    if (newStatus === "ONGOING") {
+      startEvent({ status: newStatus, id, late });
+    }
+
+    updateStatus({ status: newStatus, id });
   }
 
   return (
@@ -97,23 +109,25 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
             <DialogTitle>Confirm Action</DialogTitle>
           </DialogHeader>
           <div className="grid w-full grid-cols-2 gap-2">
-            <Input
-              type="time"
-              defaultValue={late}
-              className="col-span-2"
-              onChange={(v) => setLate(v.currentTarget.value)}
-            />
+            {newStatus === "ONGOING" && (
+              <Input
+                type="time"
+                defaultValue={late}
+                className="col-span-2"
+                onChange={(v) => setLate(v.currentTarget.value)}
+              />
+            )}
 
             <DialogClose asChild>
               <Button
                 variant="outline"
-                disabled={isLoading}
+                disabled={isUpdating || isStarting}
                 className="border-red-500 text-red-500 hover:border-red-400 hover:text-red-400"
               >
                 Close
               </Button>
             </DialogClose>
-            <Button disabled={isLoading} onClick={onConfirm}>
+            <Button disabled={isUpdating || isStarting} onClick={onConfirm}>
               Confirm
             </Button>
           </div>
