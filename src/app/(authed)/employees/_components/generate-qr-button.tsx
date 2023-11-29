@@ -46,7 +46,7 @@ export default function GenerateQrButton({
       for (const employee of employees) {
         selectedItems.push({
           fullName: employee.fullName,
-          office: employee.officeAcronym!,
+          office: employee.officeAssignmentAcronym!,
           id: employee.id,
         });
       }
@@ -57,7 +57,7 @@ export default function GenerateQrButton({
         if (employee) {
           selectedItems.push({
             fullName: employee.fullName,
-            office: employee.officeAcronym!,
+            office: employee.officeAssignmentAcronym!,
             id: employee.id,
           });
         }
