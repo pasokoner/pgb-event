@@ -67,7 +67,7 @@ export default function EditEmployee({ id }: EditEmployee) {
       </DialogTrigger>
       <DialogContent className="gap-2 sm:max-w-[620px] md:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Delete Employee</DialogTitle>
+          <DialogTitle>Edit Employee</DialogTitle>
         </DialogHeader>
         {isLoading && (
           <div className="flex w-full items-center justify-center py-4">
