@@ -40,6 +40,8 @@ export default function EventControl({
     initialData: [],
   });
 
+  const attendeesId = attendance.data.map((a) => a.id);
+
   if (!event.data) {
     return <></>;
   }
@@ -73,7 +75,9 @@ export default function EventControl({
         </TabsContent>
         <TabsContent value="employees">
           <DataTableEmployees
-            data={employees.data}
+            data={employees.data.filter(
+              (employee) => !attendeesId.includes(employee.id),
+            )}
             columns={employeesColumns}
           />
         </TabsContent>

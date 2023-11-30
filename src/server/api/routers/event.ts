@@ -120,6 +120,7 @@ export const eventRouter = createTRPCRouter({
         } = employee;
 
         return {
+          id: employee.id,
           date,
           fullName: [firstName, middleName, lastName, extensionName].join(" "),
           employmentStatus,
