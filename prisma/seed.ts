@@ -1,21 +1,21 @@
-import { PrismaClient } from "@prisma/client";
-import { jobOrders, offices, regulars } from "./data";
+import { type EmploymentStatus, PrismaClient } from "@prisma/client";
+import { employees, offices } from "./data";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Account creation");
-  await fetch("http://localhost:3000/api/auth/admin-creation", {
-    method: "POST",
-    body: JSON.stringify({}),
-  });
-  console.log("Admin account created");
+  // console.log("Account creation");
+  // await fetch("http://localhost:3000/api/auth/admin-creation", {
+  //   method: "POST",
+  //   body: JSON.stringify({}),
+  // });
+  // console.log("Admin account created");
 
   console.log("Seeding data");
 
-  await addOffices();
-  await addRegulars();
-  await addJobOrders();
+  // await addOffices();
+  await prisma.employee.deleteMany();
+  await addEmployees();
 
   console.log(`Seeding finished.`);
 }
@@ -30,41 +30,20 @@ main()
     process.exit(1);
   });
 
-async function addRegulars() {
-  for (const r of regulars) {
+async function addEmployees() {
+  for (const e of employees) {
     const regular = await prisma.employee.create({
       data: {
-        firstName: r.firstName,
-        middleName: r.middleName,
-        lastName: r.lastName,
-        extensionName: r.extensionName,
-        position: r.position?.trim(),
-        genericPosition: r.genericPosition?.trim(),
-        officeAcronym: r.office.trim().toUpperCase(),
-        officeAssignmentAcronym: r.officeAssignment.trim().toUpperCase(),
-        employmentStatus: "REGULAR",
+        firstName: e.firstName,
+        middleName: e.middleName,
+        lastName: e.lastName,
+        extensionName: e.extensionName,
+        officeAcronym: e.office.trim().toUpperCase(),
+        officeAssignmentAcronym: e.officeAssignment.trim().toUpperCase(),
+        employmentStatus: e.employmentStatus as EmploymentStatus,
       },
     });
     console.log(`Created user with id: ${regular.id}`);
-  }
-}
-
-async function addJobOrders() {
-  for (const j of jobOrders) {
-    const jobOrder = await prisma.employee.create({
-      data: {
-        firstName: j.firstName,
-        middleName: j.middleName,
-        lastName: j.lastName,
-        extensionName: j.extensionName,
-        position: j.position?.trim(),
-        genericPosition: j.genericPosition?.trim(),
-        officeAcronym: j.office.trim().toUpperCase(),
-        officeAssignmentAcronym: j.officeAssignment.trim().toUpperCase(),
-        employmentStatus: "JOBORDER",
-      },
-    });
-    console.log(`Created user with id: ${jobOrder.id}`);
   }
 }
 
