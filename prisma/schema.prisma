@@ -60,8 +60,6 @@ model Employee {
     lastName                String            @map("last_name")
     middleName              String?           @map("middle_name")
     extensionName           String?           @map("extension_name")
-    position                String?
-    genericPosition         String?           @map("generic_position")
     officeAcronym           String?           @map("office_acronym")
     officeAssignmentAcronym String?           @map("office_assignment_acronym")
     employmentStatus        EmploymentStatus  @map("employment_status")

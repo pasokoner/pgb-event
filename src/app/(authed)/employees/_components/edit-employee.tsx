@@ -31,7 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { type TEditEmployeeSchema, editEmployeeSchema } from "@/lib/types";
-import { Employee, EmploymentStatus } from "@prisma/client";
+import { type Employee, EmploymentStatus } from "@prisma/client";
 
 import { api } from "@/trpc/react";
 import { Loader2, PencilIcon } from "lucide-react";
@@ -104,8 +104,6 @@ const EditForm = ({ employee, onSuccess }: EditFormProps) => {
       middleName: employee.middleName ? employee.middleName : "",
       lastName: employee.lastName,
       extensionName: employee.extensionName ? employee.extensionName : "",
-      position: employee.position ? employee.position : "",
-      genericPosition: employee.genericPosition ? employee.genericPosition : "",
       employmentStatus: employee.employmentStatus
         ? employee.employmentStatus
         : "JOBORDER",
@@ -176,34 +174,6 @@ const EditForm = ({ employee, onSuccess }: EditFormProps) => {
               <FormLabel>Extension Name</FormLabel>
               <FormControl>
                 <Input placeholder="(optional)" autoComplete="off" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="position"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Position</FormLabel>
-              <FormControl>
-                <Input autoComplete="off" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="genericPosition"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Generic Position</FormLabel>
-              <FormControl>
-                <Input autoComplete="off" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -15,11 +15,6 @@ export const newEmployeeSchema = z.object({
   middleName: z.string().trim().optional(),
   lastName: z.string().trim().min(2, { message: "Please enter a name" }),
   extensionName: z.string().trim().optional(),
-  position: z.string().trim().min(2, { message: "Please enter a position" }),
-  genericPosition: z
-    .string()
-    .trim()
-    .min(2, { message: "Please enter a position" }),
   employmentStatus: z.nativeEnum(EmploymentStatus),
   officeAcronym: z
     .string()

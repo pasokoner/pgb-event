@@ -59,8 +59,6 @@ export default function AddEmployee() {
       middleName: "",
       lastName: "",
       extensionName: "",
-      position: "",
-      genericPosition: "",
       employmentStatus: "JOBORDER",
       officeAcronym: "",
       officeAssignmentAcronym: "",
@@ -146,34 +144,6 @@ export default function AddEmployee() {
                       autoComplete="off"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="position"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Position</FormLabel>
-                  <FormControl>
-                    <Input autoComplete="off" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="genericPosition"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Generic Position</FormLabel>
-                  <FormControl>
-                    <Input autoComplete="off" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
