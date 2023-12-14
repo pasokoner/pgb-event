@@ -108,6 +108,9 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
           <DialogHeader>
             <DialogTitle>Confirm Action</DialogTitle>
           </DialogHeader>
+          {newStatus === "ONGOING" && (
+            <div className="text-sm text-gray-600">Set time for latecomers</div>
+          )}
           <div className="grid w-full grid-cols-2 gap-2">
             {newStatus === "ONGOING" && (
               <Input

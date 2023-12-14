@@ -39,7 +39,7 @@ export default function Scanner({ onScanResult }: ScannerProps) {
         overlay: overlayRef.current ?? undefined,
       },
     );
-  }, [onScanResult]);
+  }, []);
 
   useEffect(() => {
     const myScanner = qrScanner();

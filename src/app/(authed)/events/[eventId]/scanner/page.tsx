@@ -23,7 +23,7 @@ export default function ScannerPage({
     refetchOnMount: false,
   });
 
-  const { mutate } = api.attendance.create.useMutation({
+  const { mutateAsync } = api.attendance.create.useMutation({
     onSuccess: (data) => {
       toast.custom(
         <div className="w-full max-w-md rounded-sm border-2 border-l-4 border-green-500 bg-white p-1.5 shadow-sm">
@@ -52,12 +52,15 @@ export default function ScannerPage({
     return <div>Event does not exist</div>;
   }
 
-  const onScanResult = (data: string) => {
+  const onScanResult = async (data: string) => {
     if (data === "") {
       return;
     }
+    const toastId = toast.loading("Checking attendance...");
+    await mutateAsync({ employeeId: data, eventId: params.eventId });
+    toast.dismiss(toastId);
 
-    mutate({ employeeId: data, eventId: params.eventId });
+    // mutate({ employeeId: data, eventId: params.eventId });
   };
 
   return (

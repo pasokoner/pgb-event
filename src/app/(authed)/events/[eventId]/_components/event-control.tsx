@@ -2,7 +2,6 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { DataTable } from "@/components/data-table";
 import { api } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
 import { Focus } from "lucide-react";
@@ -71,7 +70,7 @@ export default function EventControl({
           <TabsTrigger value="employees">Employees</TabsTrigger>
         </TabsList>
         <TabsContent value="present">
-          <DataTable data={attendance.data} columns={columns} />
+          <DataTableEmployees data={attendance.data} columns={columns} />
         </TabsContent>
         <TabsContent value="employees">
           <DataTableEmployees
