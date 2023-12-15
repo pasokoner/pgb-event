@@ -36,12 +36,7 @@ export type TEditEmployeeSchema = z.infer<typeof editEmployeeSchema>;
 
 export const newEventSchema = z.object({
   name: z.string().trim().min(5, { message: "Please be descriptive" }),
-  date: z.date().refine(
-    (d) => {
-      return !isPast(d) || isToday(d);
-    },
-    { message: "Past date is not a valid input" },
-  ),
+  date: z.date(),
   type: z.string().trim(),
 });
 
