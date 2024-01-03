@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { api } from "@/trpc/react";
 import { Trash2 } from "lucide-react";
@@ -36,7 +37,11 @@ export default function DeleteOffice({ id }: DeleteOfficeProps) {
       </DialogTrigger>
       <DialogContent className="max-w-xs">
         <DialogHeader>
-          <DialogTitle>Delete User</DialogTitle>
+          <DialogTitle>Delete Office</DialogTitle>
+          <DialogDescription className="font-semibold text-red-500">
+            WARNING! Deleting this will delete all the employees and all of its
+            record
+          </DialogDescription>
         </DialogHeader>
         <div className="grid w-full grid-cols-2 gap-x-2">
           <DialogClose asChild>
