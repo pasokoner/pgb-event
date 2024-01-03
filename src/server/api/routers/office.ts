@@ -43,7 +43,7 @@ export const officeRouter = createTRPCRouter({
       try {
         const office = await db.office.create({
           data: {
-            acronym: input.acronym,
+            acronym: input.acronym.toUpperCase(),
             name: input?.name,
           },
         });
