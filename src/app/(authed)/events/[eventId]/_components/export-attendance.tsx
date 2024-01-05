@@ -37,7 +37,7 @@ export default function ExportAttendance({
     };
     attendeesSheet.getCell(`A1`).value = "ATTENDANCE";
     attendeesSheet.getCell(`A2`).value = `Event name: ${eventName}`;
-    attendeesSheet.getCell(`A3`).value = `Scheduled Data: ${format(
+    attendeesSheet.getCell(`A3`).value = `Scheduled Date: ${format(
       eventDate,
       "MM/dd/yyyy",
     )}`;
@@ -83,7 +83,7 @@ export default function ExportAttendance({
     };
     employeesSheet.getCell(`A1`).value = "ATTENDANCE";
     employeesSheet.getCell(`A2`).value = `Event name: ${eventName}`;
-    employeesSheet.getCell(`A3`).value = `Scheduled Data: ${format(
+    employeesSheet.getCell(`A3`).value = `Scheduled Date: ${format(
       eventDate,
       "MM/dd/yyyy",
     )}`;
