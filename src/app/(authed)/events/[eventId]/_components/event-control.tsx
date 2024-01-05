@@ -65,20 +65,25 @@ export default function EventControl({
         </Button>
 
         <div className="space-x-2">
-          <ExportAttendance
-            employees={absentees}
-            eventName={event.data.name}
-            attendees={attendance.data}
-            eventDate={event.data.date}
-          />
           <EventButtons status={event.data.status} id={event.data.id} />
         </div>
       </div>
 
       <Tabs defaultValue="present">
-        <TabsList>
-          <TabsTrigger value="present">Present</TabsTrigger>
-          <TabsTrigger value="employees">Employees</TabsTrigger>
+        <TabsList className="flex">
+          <div>
+            <TabsTrigger value="present">Present</TabsTrigger>
+            <TabsTrigger value="employees">Employees</TabsTrigger>
+          </div>
+
+          <div className="ml-auto">
+            <ExportAttendance
+              employees={absentees}
+              eventName={event.data.name}
+              attendees={attendance.data}
+              eventDate={event.data.date}
+            />
+          </div>
         </TabsList>
         <TabsContent value="present">
           <DataTableEmployees data={attendance.data} columns={columns} />
