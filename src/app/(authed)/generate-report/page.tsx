@@ -11,20 +11,7 @@ import ReportTable from "./_components/table";
 import { format } from "date-fns";
 
 import * as ExcelJS from "exceljs";
-
-function groupBy<T>(list: T[], keyGetter: (item: T) => string) {
-  const map = new Map<string, T[]>();
-  list.forEach((item) => {
-    const key = keyGetter(item);
-    const collection = map.get(key);
-    if (!collection) {
-      map.set(key, [item]);
-    } else {
-      collection.push(item);
-    }
-  });
-  return map;
-}
+import { groupBy } from "@/lib/utils";
 
 export default function GenerateReport() {
   const [reportData, setReportData] = useState<TNewReportSchema | null>(null);

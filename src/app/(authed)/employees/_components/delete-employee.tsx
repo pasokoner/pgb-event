@@ -20,7 +20,7 @@ export default function DeleteEmployee({ id }: DeleteEmployeeProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const { mutate, isLoading } = api.event.delete.useMutation({
+  const { mutate, isLoading } = api.employee.delete.useMutation({
     onSuccess: () => {
       setOpen(false);
       router.refresh();

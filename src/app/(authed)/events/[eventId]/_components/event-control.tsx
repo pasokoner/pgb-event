@@ -11,6 +11,7 @@ import { columns } from "./columns";
 import EventButtons from "./event-buttons";
 import Link from "next/link";
 import { DataTableEmployees } from "./employees-table";
+import ExportAttendance from "./export-attendance";
 
 type EventControlProps = {
   eventId: string;
@@ -45,6 +46,10 @@ export default function EventControl({
     return <></>;
   }
 
+  const absentees = employees.data.filter(
+    (employee) => !attendeesId.includes(employee.id),
+  );
+
   return (
     <div className="space-y-2">
       <div>
@@ -60,6 +65,12 @@ export default function EventControl({
         </Button>
 
         <div className="space-x-2">
+          <ExportAttendance
+            employees={absentees}
+            eventName={event.data.name}
+            attendees={attendance.data}
+            eventDate={event.data.date}
+          />
           <EventButtons status={event.data.status} id={event.data.id} />
         </div>
       </div>
@@ -73,12 +84,7 @@ export default function EventControl({
           <DataTableEmployees data={attendance.data} columns={columns} />
         </TabsContent>
         <TabsContent value="employees">
-          <DataTableEmployees
-            data={employees.data.filter(
-              (employee) => !attendeesId.includes(employee.id),
-            )}
-            columns={employeesColumns}
-          />
+          <DataTableEmployees data={absentees} columns={employeesColumns} />
         </TabsContent>
       </Tabs>
     </div>
