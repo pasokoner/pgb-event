@@ -57,7 +57,7 @@ export default function ScannerPage({
   }
 
   const onScanResult = async (data: string) => {
-    if (data === "") {
+    if (data === "" && status === "loading") {
       return;
     }
 

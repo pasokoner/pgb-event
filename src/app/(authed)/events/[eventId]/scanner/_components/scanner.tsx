@@ -59,9 +59,7 @@ export default function Scanner({
   }, [qrScanner]);
 
   useEffect(() => {
-    if (scanningStatus !== "loading") {
-      onScanResult(scannedResult);
-    }
+    onScanResult(scannedResult);
   }, [scannedResult, scanningStatus]);
 
   return (
