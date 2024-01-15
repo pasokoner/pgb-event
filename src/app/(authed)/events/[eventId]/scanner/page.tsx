@@ -20,17 +20,16 @@ export default function ScannerPage({
     "standby" | "loading" | "success" | "error"
   >("standby");
 
-  const [errorMessage, setErrorMessage] = useState("Event has not started yet");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
   const [attendee, setAttendee] = useState<
     | undefined
     | {
         fullName: string;
         date: Date;
       }
-  >({
-    fullName: "john Carlo",
-    date: new Date(),
-  });
+  >(undefined);
 
   const event = api.event.eventById.useQuery(params.eventId, {
     refetchOnWindowFocus: false,
@@ -57,7 +56,7 @@ export default function ScannerPage({
   }
 
   const onScanResult = async (data: string) => {
-    if (data === "" && status === "loading") {
+    if (data === "" && status !== "loading") {
       return;
     }
 
@@ -108,7 +107,7 @@ export default function ScannerPage({
         </div>
       )}
 
-      {status === "error" && (
+      {status === "error" && errorMessage && (
         <div className="z-50 w-full rounded-t-sm bg-red-300 p-3 text-center text-sm font-bold text-red-700 shadow-sm">
           {errorMessage}
         </div>
