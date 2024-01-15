@@ -113,7 +113,7 @@ export default function ScannerPage({
         </div>
       )}
 
-      <Scanner scanningStatus={status} onScanResult={onScanResult} />
+      <Scanner onScanResult={onScanResult} />
     </div>
   );
 }
