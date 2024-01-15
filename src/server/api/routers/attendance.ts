@@ -24,21 +24,21 @@ export const attendanceRouter = createTRPCRouter({
       if (eventStatus?.status === "UPCOMING") {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "Event is not started yet",
+          message: "Event has not started yet",
         });
       }
 
       if (eventStatus?.status === "CANCELLED") {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "Event is cancelled",
+          message: "Event has been cancelled",
         });
       }
 
       if (eventStatus?.status === "ENDED") {
         throw new TRPCError({
           code: "UNAUTHORIZED",
-          message: "Event is ended",
+          message: "Event has been ended",
         });
       }
 

@@ -5,9 +5,13 @@ import { cn } from "@/lib/utils";
 
 type ScannerProps = {
   onScanResult: (data: string) => void;
+  scanningStatus: "standby" | "loading" | "success" | "error";
 };
 
-export default function Scanner({ onScanResult }: ScannerProps) {
+export default function Scanner({
+  onScanResult,
+  scanningStatus,
+}: ScannerProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const [scannedResult, setScannedResult] = useState("");
   const detectTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -55,8 +59,10 @@ export default function Scanner({ onScanResult }: ScannerProps) {
   }, [qrScanner]);
 
   useEffect(() => {
-    onScanResult(scannedResult);
-  }, [scannedResult]);
+    if (scanningStatus !== "loading") {
+      onScanResult(scannedResult);
+    }
+  }, [scannedResult, scanningStatus]);
 
   return (
     <div>

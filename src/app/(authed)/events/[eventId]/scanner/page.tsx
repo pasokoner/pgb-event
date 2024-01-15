@@ -4,20 +4,34 @@ import { cn } from "@/lib/utils";
 import Scanner from "./_components/scanner";
 
 import { api } from "@/trpc/react";
-import { Circle } from "lucide-react";
+import { Circle, LoaderIcon } from "lucide-react";
 import { color } from "@/lib/config";
 
-import toast from "react-hot-toast";
-import RecentButton from "./_components/recent-button";
-import UserRecentButton from "./_components/user-recent-button";
-
 import { format } from "date-fns";
+import ActivityDropdown from "./_components/activity-dropdown";
+import { useState } from "react";
 
 export default function ScannerPage({
   params,
 }: {
   params: { eventId: string };
 }) {
+  const [status, setStatus] = useState<
+    "standby" | "loading" | "success" | "error"
+  >("standby");
+
+  const [errorMessage, setErrorMessage] = useState("Event has not started yet");
+  const [attendee, setAttendee] = useState<
+    | undefined
+    | {
+        fullName: string;
+        date: Date;
+      }
+  >({
+    fullName: "john Carlo",
+    date: new Date(),
+  });
+
   const event = api.event.eventById.useQuery(params.eventId, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -25,24 +39,12 @@ export default function ScannerPage({
 
   const { mutateAsync } = api.attendance.create.useMutation({
     onSuccess: (data) => {
-      toast.dismiss();
-      toast.custom(
-        <div className="w-full max-w-md rounded-sm border-2 border-l-4 border-green-500 bg-white p-1.5 shadow-sm">
-          <div className="text-lg font-bold">Attendance recorded</div>
-          <div className="text-sm text-gray-500">
-            <span className="text-semibold text-black">{data.fullName}</span>{" "}
-            has been recorded as attended.
-          </div>
-
-          <div className="flex text-xs">
-            <div className="ml-auto">{format(data.date, "HH:mm a")}</div>
-          </div>
-        </div>,
-      );
+      setStatus("success");
+      setAttendee(data);
     },
     onError(error) {
-      toast.dismiss();
-      toast.error(error.message);
+      setStatus("error");
+      setErrorMessage(error.message);
     },
   });
 
@@ -58,35 +60,61 @@ export default function ScannerPage({
     if (data === "") {
       return;
     }
-    // const toastId = toast.loading("Checking attendance...");
-    await mutateAsync({ employeeId: data, eventId: params.eventId });
-    // toast.dismiss(toastId);
 
-    // mutate({ employeeId: data, eventId: params.eventId });
+    setStatus("loading");
+    await mutateAsync({ employeeId: data, eventId: params.eventId });
   };
 
   return (
-    <div className="space-y-2">
+    <div className="relative">
+      <Circle
+        className={cn(
+          color[event.data.status],
+          "absolute -top-5 right-0 h-4 w-4 rounded-full bg-none",
+        )}
+      />
       <div className="flex justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-700">EVENT SCANNER</h1>
-          <p className="text-sm text-gray-500">{event.data.name}</p>
+        <h1 className="text-xl font-bold text-gray-700">{event.data.name}</h1>
+        <div className="flex h-full">
+          <ActivityDropdown eventId={params.eventId} />
         </div>
-
-        <Circle
-          className={cn(
-            color[event.data.status],
-            "h-4 w-4 rounded-full bg-none",
-          )}
-        />
       </div>
 
-      <div className="grid grid-cols-2 gap-x-2">
-        <RecentButton eventId={params.eventId} />
-        <UserRecentButton eventId={params.eventId} />
-      </div>
+      {status === "standby" && (
+        <div className="z-50 w-full rounded-t-sm bg-gray-400 p-3 text-center text-sm font-bold text-gray-800 shadow-sm">
+          START SCANNING
+        </div>
+      )}
 
-      <Scanner onScanResult={onScanResult} />
+      {status === "loading" && (
+        <div className="z-50 flex w-full items-center justify-center gap-2 rounded-t-sm bg-orange-300 p-3 font-bold text-orange-700 shadow-sm">
+          <div>Please wait</div>
+          <LoaderIcon className="h-4 w-4 animate-spin" />
+        </div>
+      )}
+
+      {status === "success" && attendee && (
+        <div className="z-50 w-full rounded-t-sm bg-green-300 p-3 text-green-800 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-bold">Attendance Recorded</div>
+            <div className="text-xs">{format(attendee.date, "HH:mm a")}</div>
+          </div>
+          <div className="text-xs text-gray-500">
+            <span className="text-semibold text-black">
+              {attendee.fullName}
+            </span>{" "}
+            has been recorded as attended.
+          </div>
+        </div>
+      )}
+
+      {status === "error" && (
+        <div className="z-50 w-full rounded-t-sm bg-red-300 p-3 text-center text-sm font-bold text-red-700 shadow-sm">
+          {errorMessage}
+        </div>
+      )}
+
+      <Scanner scanningStatus={status} onScanResult={onScanResult} />
     </div>
   );
 }
