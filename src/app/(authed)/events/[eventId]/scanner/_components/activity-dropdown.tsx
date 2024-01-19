@@ -23,12 +23,14 @@ export default function ActivityDropdown({ eventId }: ActivityDropdownProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Activity Log</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        {/* <DropdownMenuItem>
+        </DropdownMenuItem>
         <DropdownMenuItem>
+        </DropdownMenuItem> */}
+        <div className="flex flex-col gap-2">
           <RecentButton eventId={eventId} />
-        </DropdownMenuItem>
-        <DropdownMenuItem>
           <UserRecentButton eventId={eventId} />
-        </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
