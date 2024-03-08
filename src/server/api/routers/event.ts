@@ -63,6 +63,23 @@ export const eventRouter = createTRPCRouter({
         },
       });
     }),
+  updateLate: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        date: z.date(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.event.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          date: input.date,
+        },
+      });
+    }),
   startEvent: protectedProcedure
     .input(
       z.object({

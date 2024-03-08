@@ -12,6 +12,7 @@ import EventButtons from "./event-buttons";
 import Link from "next/link";
 import { DataTableEmployees } from "./employees-table";
 import ExportAttendance from "./export-attendance";
+import AdjustLate from "./adjust-late";
 
 type EventControlProps = {
   eventId: string;
@@ -76,7 +77,10 @@ export default function EventControl({
             <TabsTrigger value="employees">Employees</TabsTrigger>
           </div>
 
-          <div className="ml-auto">
+          <div className="ml-auto flex gap-x-2">
+            {event.data.status === "ONGOING" && (
+              <AdjustLate id={event.data.id} defaultLate={event.data.date} />
+            )}
             <ExportAttendance
               employees={absentees}
               eventName={event.data.name}

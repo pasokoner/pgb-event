@@ -26,7 +26,7 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
 
   const [open, setOpen] = useState(false);
   const [newStatus, setNewStatus] = useState<EventStatus>(status);
-  const [late, setLate] = useState(format(new Date(), "HH:mm"));
+  const [late, setLate] = useState(format(new Date(), "yyyy-MM-dd hh:mm"));
 
   const { mutate: updateStatus, isLoading: isUpdating } =
     api.event.updateStatus.useMutation({
@@ -50,8 +50,9 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
   }
 
   function onConfirm() {
-    if (newStatus === "ONGOING") {
+    if (newStatus === "UPCOMING") {
       startEvent({ status: newStatus, id, late });
+      return;
     }
 
     updateStatus({ status: newStatus, id });
@@ -114,7 +115,7 @@ export default function EventButtons({ status, id }: EventButtonsProps) {
           <div className="grid w-full grid-cols-2 gap-2">
             {newStatus === "ONGOING" && (
               <Input
-                type="time"
+                type="datetime-local"
                 defaultValue={late}
                 className="col-span-2"
                 onChange={(v) => setLate(v.currentTarget.value)}
