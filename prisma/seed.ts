@@ -1,5 +1,7 @@
 import { type EmploymentStatus, PrismaClient } from "@prisma/client";
 import { employees, offices } from "./data";
+import { writeFileSync } from "fs";
+import ExcelJS from "exceljs";
 
 const prisma = new PrismaClient();
 
@@ -11,12 +13,30 @@ async function main() {
   // });
   // console.log("Admin account created");
 
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Sheet 1");
+
   console.log("Seeding data");
+  const data = await prisma.user.findMany();
+  if (data[0]) {
+    const headers = Object.keys(data[0]);
+    worksheet.addRow(headers);
+    data.forEach((row) => {
+      worksheet.addRow(Object.values(row));
+    });
 
-  // await addOffices();
-  await prisma.employee.deleteMany();
-  await addEmployees();
+    // Save the workbook to a file
+    workbook.xlsx
+      .writeFile("example.xlsx")
+      .then(() => {
+        console.log("Excel file created successfully");
+      })
+      .catch((err) => {
+        console.error("Error creating Excel file:", err);
+      });
+  }
 
+  // convert json to object and produce output to parent file
   console.log(`Seeding finished.`);
 }
 
