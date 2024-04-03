@@ -36,17 +36,17 @@ export const columns: ColumnDef<AllEvent>[] = [
       return <div className="text-left font-bold">{formatted}</div>;
     },
   },
-  {
-    accessorKey: "id",
-    header: "Actions",
-    cell: ({ row }) => {
-      const id = row.getValue("id");
+  // {
+  //   accessorKey: "id",
+  //   header: "Actions",
+  //   cell: ({ row }) => {
+  //     const id = row.getValue("id");
 
-      return (
-        <div className="flex items-center gap-x-2">
-          <DeleteUser id={id as string} />
-        </div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="flex items-center gap-x-2">
+  //         <DeleteUser id={id as string} />
+  //       </div>
+  //     );
+  //   },
+  // },
 ];
