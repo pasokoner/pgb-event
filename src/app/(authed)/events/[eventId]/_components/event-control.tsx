@@ -33,7 +33,6 @@ export default function EventControl({
     },
     {
       initialData: [],
-      refetchInterval: 5000,
     },
   );
 

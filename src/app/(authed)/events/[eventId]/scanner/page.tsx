@@ -8,7 +8,6 @@ import { Circle, LoaderIcon } from "lucide-react";
 import { color } from "@/lib/config";
 
 import { format } from "date-fns";
-import ActivityDropdown from "./_components/activity-dropdown";
 import { useState } from "react";
 
 export default function ScannerPage({
@@ -74,9 +73,9 @@ export default function ScannerPage({
       />
       <div className="flex justify-between">
         <h1 className="text-xl font-bold text-gray-700">{event.data.name}</h1>
-        <div className="flex h-full">
+        {/* <div className="flex h-full">
           <ActivityDropdown eventId={params.eventId} />
-        </div>
+        </div> */}
       </div>
 
       {status === "standby" && (
