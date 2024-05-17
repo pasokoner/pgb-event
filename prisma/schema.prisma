@@ -52,6 +52,7 @@ model Key {
 enum EmploymentStatus {
     JOBORDER
     REGULAR
+    COS
 }
 
 model Employee {
