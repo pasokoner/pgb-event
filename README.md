@@ -6,10 +6,9 @@
 $ npm install
 ```
 
-## Seeding With Admin Account
+## Seed Admin Account
 
-This is required because we need to fetch from http://localhost:3000/api/auth/admin-creation for
-the creation of admin
+Fetch from http://localhost:3000/api/auth/admin-creation to create admin account
 
 ```bash
 $ npm run dev
