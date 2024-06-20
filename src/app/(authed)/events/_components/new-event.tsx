@@ -16,6 +16,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { CalendarIcon } from "lucide-react";
@@ -93,7 +100,7 @@ export function NewEvent({ isFlagCeremony }: NewEventProps) {
           variant="outline"
           className="rounded-sm border-primary bg-white text-xs text-primary hover:bg-white hover:text-primary sm:text-base"
         >
-          {isFlagCeremony ? "Flag Ceremony" : "Custom Event"}
+          {isFlagCeremony ? "Flag Raising" : "Custom Event"}
         </Button>
       </DialogTrigger>
       <DialogContent className="gap-2 sm:max-w-[425px]">
@@ -125,9 +132,30 @@ export function NewEvent({ isFlagCeremony }: NewEventProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Type</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
+                  {isFlagCeremony ? (
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Flag Raising">
+                          Flag Raising
+                        </SelectItem>
+                        <SelectItem value="Flag Retreat">
+                          Flag Retreat
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}

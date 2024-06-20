@@ -12,7 +12,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Popover,
   PopoverContent,
@@ -52,6 +58,7 @@ export default function ReportForm({ onSubmitSuccess }: ReportFormProps) {
       fromDate: startOfMonth(new Date()),
       toDate: lastDayOfMonth(new Date()),
       notedBy: "",
+      type: "",
     },
   });
 
@@ -60,6 +67,11 @@ export default function ReportForm({ onSubmitSuccess }: ReportFormProps) {
     const params = new URLSearchParams(searchParams);
     params.set("fromDate", data.fromDate.toISOString());
     params.set("toDate", data.toDate.toISOString());
+    if (data.type) {
+      params.set("type", data.type);
+    } else {
+      params.delete("type");
+    }
     router.replace(`${pathname}?${params.toString()}`);
   }
 
@@ -192,6 +204,29 @@ export default function ReportForm({ onSubmitSuccess }: ReportFormProps) {
               <FormControl>
                 <Input autoComplete="off" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="Flag Raising">Flag Raising</SelectItem>
+                  <SelectItem value="Flag Retreat">Flag Retreat</SelectItem>
+                </SelectContent>
+              </Select>
+
               <FormMessage />
             </FormItem>
           )}

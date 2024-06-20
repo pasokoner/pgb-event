@@ -23,6 +23,7 @@ export default function GenerateReport() {
     {
       fromDate: new Date(searchParams.get("fromDate")!),
       toDate: new Date(searchParams.get("toDate")!),
+      type: searchParams.get("type") ? searchParams.get("type")! : undefined,
     },
     {
       enabled: !!searchParams.get("fromDate") && !!searchParams.get("toDate"),

@@ -78,6 +78,7 @@ export const newReportSchema = z.object({
     .string()
     .trim()
     .min(5, { message: "Please enter a position" }),
+  type: z.string().optional(),
 });
 
 export type TNewReportSchema = z.infer<typeof newReportSchema>;

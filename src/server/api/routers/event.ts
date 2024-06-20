@@ -208,6 +208,7 @@ export const eventRouter = createTRPCRouter({
             lte: input.toDate,
           },
           status: "ENDED",
+          ...(!!input.type ? { type: input.type } : {}),
         },
       });
       const employees = await ctx.db.employee.findMany({
