@@ -42,6 +42,12 @@ export const newEventSchema = z.object({
 
 export type TNewEventSchema = z.infer<typeof newEventSchema>;
 
+export const editEventSchema = newEventSchema.extend({
+  id: z.string(),
+});
+
+export type TEditEventSchema = z.infer<typeof editEventSchema>;
+
 export const newUserSchema = z.object({
   username: z
     .string()

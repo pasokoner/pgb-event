@@ -1,4 +1,4 @@
-import { newEventSchema, newReportSchema } from "@/lib/types";
+import { editEventSchema, newEventSchema, newReportSchema } from "@/lib/types";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { EventStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
@@ -28,6 +28,16 @@ export const eventRouter = createTRPCRouter({
     .input(newEventSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.event.create({
+        data: input,
+      });
+    }),
+  edit: protectedProcedure
+    .input(editEventSchema)
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.event.update({
+        where: {
+          id: input.id,
+        },
         data: input,
       });
     }),

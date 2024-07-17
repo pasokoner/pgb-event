@@ -55,6 +55,9 @@ export const columns: ColumnDef<AllEvent>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const id = row.getValue("id");
+      const date = row.getValue("date");
+      const type = row.getValue("type");
+      const name = row.getValue("name");
 
       return (
         <div className="flex items-center gap-x-3">
@@ -64,6 +67,7 @@ export const columns: ColumnDef<AllEvent>[] = [
               <Settings />
             </Link>
           </Button>
+
           <Button variant="ghost" size="icon" className="h-4 w-4" asChild>
             <Link href={`/events/${id as string}/scanner`}>
               <Focus />

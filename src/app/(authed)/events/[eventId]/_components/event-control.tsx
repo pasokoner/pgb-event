@@ -13,6 +13,7 @@ import Link from "next/link";
 import { DataTableEmployees } from "./employees-table";
 import ExportAttendance from "./export-attendance";
 import AdjustLate from "./adjust-late";
+import EditEvent from "./edit-event";
 
 type EventControlProps = {
   eventId: string;
@@ -57,12 +58,21 @@ export default function EventControl({
         <p className="text-sm text-gray-500">{event.data.name}</p>
       </div>
 
-      <div className="flex justify-between gap-2">
-        <Button variant="ghost" size="icon">
-          <Link href={`/events/${event.data.id}/scanner`}>
-            <Focus />
-          </Link>
-        </Button>
+      <div className="flex justify-between gap-x-2">
+        <div className="flex items-center gap-x-2">
+          <Button variant="ghost" size="icon">
+            <Link href={`/events/${event.data.id}/scanner`}>
+              <Focus />
+            </Link>
+          </Button>
+
+          <EditEvent
+            id={event.data.id}
+            name={event.data.name}
+            type={event.data.type}
+            date={event.data.date}
+          />
+        </div>
 
         <div className="space-x-2">
           <EventButtons status={event.data.status} id={event.data.id} />
