@@ -234,6 +234,7 @@ export const eventRouter = createTRPCRouter({
                   lte: input.toDate,
                 },
                 status: "ENDED",
+                ...(!!input.type ? { type: input.type } : {}),
               },
             },
             include: {
@@ -261,9 +262,12 @@ export const eventRouter = createTRPCRouter({
           } = e;
 
           return {
-            fullName: [`${lastName},`, firstName, middleName, extensionName].join(
-              " ",
-            ),
+            fullName: [
+              `${lastName},`,
+              firstName,
+              middleName,
+              extensionName,
+            ].join(" "),
             eventAttendance,
             officeAcronym,
             officeAssignmentAcronym,
