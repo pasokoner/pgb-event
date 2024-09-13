@@ -21,7 +21,9 @@ export const employeeRouter = createTRPCRouter({
       } = employee;
 
       return {
-        fullName: [firstName, middleName, lastName, extensionName].join(" "),
+        fullName: [`${lastName},`, firstName, middleName, extensionName].join(
+          " ",
+        ),
         ...excess,
       };
     });
