@@ -261,7 +261,7 @@ export const eventRouter = createTRPCRouter({
           } = e;
 
           return {
-            fullName: [firstName, middleName, lastName, extensionName].join(
+            fullName: [`${lastName},`, lastName, middleName, extensionName].join(
               " ",
             ),
             eventAttendance,
